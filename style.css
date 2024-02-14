@@ -1,3 +1,40 @@
 body {
     margin: 0;
+    background-color: #212121;
+}
+
+nav {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    height: 100px;
+    color: #E0E0E0;
+    padding-right: 16px;
+    padding-left: 16px;
+}
+
+.container {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#words {
+    display: flex;
+    width: 700px;
+    height: 150px;
+    border-radius: 8px;
+    border: 1px solid #424242;
+    box-shadow: 0px 0px 128px #131313;
+    color: #eeeeee79;
+}
+
+#input {
+    position: absolute;
+    background-color: transparent;
+    border: none;
+    outline: none;
 }
