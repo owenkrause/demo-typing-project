@@ -37,4 +37,6 @@ nav {
     background-color: transparent;
     border: none;
     outline: none;
+    opacity: 0;
+    cursor: default;
 }
