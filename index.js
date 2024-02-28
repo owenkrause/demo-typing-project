@@ -205,6 +205,7 @@ const wordList = [
 // access our elements
 const wordHolder = document.getElementById('words')
 const input = document.getElementById('input')
+const wpm = document.getElementById('wpm')
 
 // focus on input when wordHolder is clicked
 wordHolder.addEventListener('click', e => {
@@ -214,6 +215,7 @@ wordHolder.addEventListener('click', e => {
 // initialize the index of the word and character
 let wordIndex = 0
 let charIndex = 0
+let startTime, endTime
 
 
 // generates array of random words
@@ -245,17 +247,43 @@ for (let i = 0, n = test.length; i < n; i++) {
 // get elements of all of the words
 let wordElements = wordHolder.querySelectorAll('div')
 
+input.addEventListener('keydown', () => {
+    startTime = Date.now()
+}, {once: true})
+
 // when input is typed into
 input.addEventListener('keydown', e => {
+    console.log(e.key)
+    if (e.key === 'Backspace') {
+        if ( charIndex > 0 ) {
+            charIndex--
+            wordElements[wordIndex].childNodes[charIndex].style.color = 'inherit'
+        }
+    }
+    else if (e.key === ' ') {
+        console.log(wordIndex, words.length)
+        if( wordIndex === 1  ) {
+            endTime = Date.now()
+            console.log('test finished', (endTime - startTime) / 1000)
+            console.log('WPM', 15 / ((endTime - startTime) / 1000) * 60)
+            wpm.textContent = Math.floor((2 / ((endTime - startTime) / 1000) * 60) * 100) / 100
+            return
+        }
+        wordIndex++
+        charIndex = 0
+        console.log(wordIndex, charIndex)
+    }
     // if the char is wrong
-    if(e.key !== test[wordIndex][charIndex]) {
+    else if(e.key !== test[wordIndex][charIndex]) {
         // make it red
         wordElements[wordIndex].childNodes[charIndex].style.color = 'red'
+        charIndex++
     // if the char is right
     } else if (e.key === test[wordIndex][charIndex]) {
         // make it white
         wordElements[wordIndex].childNodes[charIndex].style.color = '#E0E0E0'
+        charIndex++
     }
     // go to next letter
-    charIndex++
+    
 })
