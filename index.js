@@ -1,3 +1,4 @@
+// list of common english words
 const wordList = [
     "the",
     "be",
@@ -201,50 +202,60 @@ const wordList = [
     "line"
 ]
 
-const container = document.getElementById('words')
-const input = document.getElementById('input');
-console.log(container)
-console.log(input)
+// access our elements
+const wordHolder = document.getElementById('words')
+const input = document.getElementById('input')
 
-container.addEventListener('click', e => {
+// focus on input when wordHolder is clicked
+wordHolder.addEventListener('click', e => {
     input.focus()
 })
 
+// initialize the index of the word and character
 let wordIndex = 0
 let charIndex = 0
 
 
-
-function randomWords() {
+// generates array of random words
+function randomWords(length) {
     const words = []
-    for (let i = 0, n = 15; i < n; i++) {
+    for (let i = 0, n = length; i < n; i++) {
+        // random index in wordList
         const ran = Math.floor(Math.random() * wordList.length)
         words.push(wordList[ran])
     }
     return words
 }
 
-const test = randomWords()
+const test = randomWords(15)
 
-
-for (let i = 0, n = 15; i < n; i++) {
-    const word = container.appendChild(document.createElement('div'))
+// for each word in test
+for (let i = 0, n = test.length; i < n; i++) {
+    // create a div and style
+    const word = wordHolder.appendChild(document.createElement('div'))
     word.style.margin = '4px'
     word.style.cursor = 'default'
+    // for each char in the word
     for (let j = 0, n = test[i].length; j < n; j++) {
+        // add a span for each char
         word.appendChild(document.createElement('span')).textContent = test[i][j]
     }
 }
 
-let wordElements = container.querySelectorAll('div')
-console.log(wordElements)
+// get elements of all of the words
+let wordElements = wordHolder.querySelectorAll('div')
 
-
+// when input is typed into
 input.addEventListener('keydown', e => {
+    // if the char is wrong
     if(e.key !== test[wordIndex][charIndex]) {
+        // make it red
         wordElements[wordIndex].childNodes[charIndex].style.color = 'red'
+    // if the char is right
     } else if (e.key === test[wordIndex][charIndex]) {
+        // make it white
         wordElements[wordIndex].childNodes[charIndex].style.color = '#E0E0E0'
     }
+    // go to next letter
     charIndex++
 })
